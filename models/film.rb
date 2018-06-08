@@ -1,5 +1,8 @@
 class Film
 
+attr_reader :id
+attr_accessor :title, :starting_time, :duration, :age_req
+
 
 def initialize (options)
   @id = options['id'].to_i if options['id']
