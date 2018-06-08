@@ -12,7 +12,7 @@ def initialize (options)
 end
 
 def save()
-sql="INSERT INTO (customer_id, film_id) VALUES ($1,$2) RETURNING id"
+sql="INSERT INTO tickets (customer_id, film_id) VALUES ($1,$2) RETURNING id"
 values=[@customer_id, @film_id]
 ticket=SqlRunner.run(sql, values).first
 @id = ticket['id'].to_i
@@ -21,7 +21,7 @@ end
 def self.all()
   sql = "SELECT * FROM tickets"
   tickets=SqlRunner.run(sql)
-  return tickets.map{ |ticket| Ticket.new(customer)}
+  return tickets.map{ |ticket| Ticket.new(ticket)}
 end
 
 def self.delete_all()
