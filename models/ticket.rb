@@ -18,6 +18,16 @@ ticket=SqlRunner.run(sql, values).first
 @id = ticket['id'].to_i
 end
 
+def self.all()
+  sql = "SELECT * FROM tickets"
+  tickets=SqlRunner.run(sql)
+  return tickets.map{ |ticket| Ticket.new(customer)}
+end
+
+def self.delete_all()
+  sql = "DELETE FROM tickets"
+  SqlRunner.run(sql)
+end
 
 
 end
