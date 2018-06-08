@@ -13,6 +13,7 @@ CREATE TABLE films (
   title VARCHAR(255),
   starting_time TIME,
   duration INT4,
+  --in minutes
   age_req INT2,
   price INT2
 );
