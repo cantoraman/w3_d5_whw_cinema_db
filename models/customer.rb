@@ -13,13 +13,12 @@ def initialize (options)
 end
 
 
-
-
-
-
-
-
-
+def save()
+  sql="INSERT INTO customers (name, age) VALUES ($1, $2) RETURNING id"
+  values = [@name, @age]
+  customer=SqlRunner.run(sql, values).first
+  @id=customer['id'].to_i
+end
 
 
 
