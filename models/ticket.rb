@@ -16,10 +16,7 @@ sql="INSERT INTO (customer_id, film_id) VALUES ($1,$2) RETURNING id"
 values=[@customer_id, @film_id]
 ticket=SqlRunner.run(sql, values).first
 @id = ticket['id'].to_i
-
-
-
-
+end
 
 
 
