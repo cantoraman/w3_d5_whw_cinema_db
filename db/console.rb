@@ -23,16 +23,15 @@ film3.save()
 ticket1 = Ticket.new({'customer_id' => customer1.id, 'film_id' => film1.id})
 ticket1.save()
 
-def add_customer(name, age)
-  Customer.update(name, age)
-end
+
 
 def add_film(title, starting_time, duration, age_req, price)
   Film.update(title, starting_time, duration, age_req, price)
 end
 
-
-
+def add_ticket(customer_id, film_id)
+  Ticket.update(customer_id, film_id)
+end
 
 
 

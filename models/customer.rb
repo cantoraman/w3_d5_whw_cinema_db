@@ -20,6 +20,21 @@ def save()
   @id=customer['id'].to_i
 end
 
+
+def booked_films()
+  sql="SELECT name FROM films WHERE"
+end
+
+
+
+def self.update_name(new_name,id)
+  sql="UPDATE customers SET name = $1 WHERE id = $2"
+  values=[new_name, id]
+  SqlRunner.run(sql, values)
+end
+
+
+
 def self.update(name, age)
   sql = "INSERT INTO customers (name, age) VALUES ($1, $2)"
   values = [name, age]

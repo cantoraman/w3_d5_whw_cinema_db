@@ -18,6 +18,13 @@ ticket=SqlRunner.run(sql, values).first
 @id = ticket['id'].to_i
 end
 
+
+def self.update(customer_id, film_id)
+  sql = "INSERT INTO tickets (customer_id, film_id) VALUES ($1, $2)"
+  values=[customer_id, film_id]
+  SqlRunner.run(sql, values)
+end
+
 def self.all()
   sql = "SELECT * FROM tickets"
   tickets=SqlRunner.run(sql)
@@ -28,6 +35,7 @@ def self.delete_all()
   sql = "DELETE FROM tickets"
   SqlRunner.run(sql)
 end
+
 
 
 end
