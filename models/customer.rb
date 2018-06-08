@@ -20,6 +20,13 @@ def save()
   @id=customer['id'].to_i
 end
 
+def self.update(name, age)
+  sql = "INSERT INTO customers (name, age) VALUES ($1, $2)"
+  values = [name, age]
+  SqlRunner.run(sql, values)
+end
+
+
 def self.all()
   sql = "SELECT * FROM customers"
   customers=SqlRunner.run(sql)

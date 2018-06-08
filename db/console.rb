@@ -10,6 +10,10 @@ customer2 = Customer.new ({'name' => "John", 'age' => "400"})
 customer1.save()
 customer2.save()
 
+def add_customer(name, age)
+  Customer.update(name, age)
+end
+
 
 
 
