@@ -35,6 +35,12 @@ def delete()
   SqlRunner.run(sql, values)
 end
 
+def self.delete_by_title(title)
+  sql = "DELETE FROM films WHERE title = $1"
+  values = [title]
+  SqlRunner.run(sql,values)
+end
+
 def self.update(title, starting_time, duration, age_req, price)
   sql = "INSERT INTO films (title, starting_time, duration, age_req, price) VALUES ($1, $2, $3, $4, $5)"
   values = [title, starting_time,duration,age_req,price]
