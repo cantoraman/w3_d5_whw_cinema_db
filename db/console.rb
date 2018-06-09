@@ -50,10 +50,10 @@ def sell_ticket()
 
 end
 
-
-
-
-
+def show_all_tickets_by_customer()
+  customer=choose_customer()
+  customer.booked_films()
+end
 #Adding Customer - old way
 # customer1 = Customer.new ({'name' => "Can", 'age' => "33", 'funds' => "2343"})
 # customer2 = Customer.new ({'name' => "John", 'age' => "400", 'funds' => "100"})
@@ -145,9 +145,7 @@ nil
 
 
 
-# Check how many tickets were bought by a customer
-# Check how many customers are going to watch a certain film
-# Advanced extensions:
+
 # Create a screenings table that lets us know what time films are showing (HARD, needs serious restructuring of your sql schema, tables, and classes)
 # Write a method that finds out what is the most popular time (most tickets sold) for a given film
 # Limit the available tickets for screenings.
