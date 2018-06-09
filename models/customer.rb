@@ -28,11 +28,20 @@ def booked_films()
 end
 
 
+def delete()
+  sql = "DELETE FROM customers WHERE id=$1"
+  values = [@id]
+  SqlRunner.run(sql, values)
+end
+
+
+
 def self.update_name(new_name,id)
   sql="UPDATE customers SET name = $1 WHERE id = $2"
   values=[new_name, id]
   SqlRunner.run(sql, values)
 end
+
 
 
 
