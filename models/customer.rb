@@ -20,11 +20,19 @@ def save()
   @id=customer['id'].to_i
 end
 
-
-def booked_films()
-  sql="SELECT name FROM films WHERE"
+########################################
+def booked_films22()
+  sql= "select films.* from films inner join tickets on tickets.film_id=films.id INNER JOIN customers on customer_id = $1;"
+  values = [@id]
+  films=SqlRunner.run(sql, values)
+  return films.map{ |film| Film.new (film)}
 end
-
+def booked_films()
+  sql= "select * from films inner join tickets on tickets.film_id=films.id AND customer_id=$1;"
+  values = [@id]
+  films=SqlRunner.run(sql, values)
+  return films.map{ |film| Film.new (film)}
+end
 
 
 def self.update_name(new_name,id)
