@@ -22,6 +22,13 @@ def save()
  @id = film['id'].to_i
 end
 
+def customers_booked()
+  sql = "SELECT customers.* FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id AND film_id = $1"
+  values = [@id]
+  customers = SqlRunner.run(sql, values)
+  return customers.map{|customer| Customer.new(customer)}
+end
+
 
 def self.update(title, starting_time, duration, age_req, price)
   sql = "INSERT INTO films (title, starting_time, duration, age_req, price) VALUES ($1, $2, $3, $4, $5)"
