@@ -44,6 +44,11 @@ def remove_funds(funds)
   SqlRunner.run(sql, values)
 end
 
+def self.find_with_id(id)
+sql= "SELECT * FROM customers WHERE id = $1"
+values=[id]
+return SqlRunner.run(sql, values)[0]
+end
 
 def self.update_name(new_name,id)
   sql="UPDATE customers SET name = $1 WHERE id = $2"
@@ -57,7 +62,6 @@ def self.update(name, age, funds)
   values = [name, age, funds]
   SqlRunner.run(sql, values)
 end
-
 
 def self.all()
   sql = "SELECT * FROM customers"

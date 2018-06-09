@@ -35,6 +35,12 @@ def delete()
   SqlRunner.run(sql, values)
 end
 
+def self.find_with_id(id)
+sql= "SELECT * FROM films WHERE id = $1"
+values=[id]
+return SqlRunner.run(sql, values)[0]
+end
+
 def self.delete_by_title(title)
   sql = "DELETE FROM films WHERE title = $1"
   values = [title]
