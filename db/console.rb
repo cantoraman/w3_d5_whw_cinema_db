@@ -40,8 +40,14 @@ def add_ticket(customer_id, film_id)
   Ticket.update(customer_id, film_id)
 end
 
+def sell_ticket(customer, film)
+  if (customer.funds>=film.price)
+  customer.remove_funds(film.price)
+  Ticket.update(customer.id, film.id)
+  end
 
 
+end
 
 
 

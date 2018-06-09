@@ -29,6 +29,7 @@ def booked_films()
 end
 
 
+
 def delete()
   sql = "DELETE FROM customers WHERE id=$1"
   values = [@id]
