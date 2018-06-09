@@ -5,7 +5,8 @@ DROP TABLE customers;
 CREATE TABLE customers (
   id SERIAL4 PRIMARY KEY,
   name VARCHAR(255),
-  age INT2
+  age INT2,
+  funds INT2
 );
 
 CREATE TABLE films (

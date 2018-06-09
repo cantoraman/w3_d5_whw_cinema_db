@@ -2,7 +2,7 @@ require_relative("../db/sql_runner")
 
 class Customer
 
-  attr_reader :id
+  attr_reader :id,:funds
   attr_accessor :name, :age
 
 
@@ -10,12 +10,13 @@ def initialize (options)
   @id = options['id'].to_i if options['id']
   @name = options['name']
   @age = options['age'].to_i
+  @funds = options['funds'].to_i
 end
 
 
 def save()
-  sql="INSERT INTO customers (name, age) VALUES ($1, $2) RETURNING id"
-  values = [@name, @age]
+  sql="INSERT INTO customers (name, age, funds) VALUES ($1, $2, $3) RETURNING id"
+  values = [@name, @age, @funds]
   customer=SqlRunner.run(sql, values).first
   @id=customer['id'].to_i
 end
@@ -34,6 +35,13 @@ def delete()
   SqlRunner.run(sql, values)
 end
 
+def remove_funds(funds)
+  new_funds=@funds-funds
+  @funds=new_funds
+  sql="UPDATE customers SET funds = $1 WHERE id = $2"
+  values=[new_funds, @id]
+  SqlRunner.run(sql, values)
+end
 
 
 def self.update_name(new_name,id)
@@ -43,11 +51,9 @@ def self.update_name(new_name,id)
 end
 
 
-
-
-def self.update(name, age)
-  sql = "INSERT INTO customers (name, age) VALUES ($1, $2)"
-  values = [name, age]
+def self.update(name, age, funds)
+  sql = "INSERT INTO customers (name, age, funds) VALUES ($1, $2, $3)"
+  values = [name, age, funds]
   SqlRunner.run(sql, values)
 end
 
