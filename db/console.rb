@@ -76,7 +76,7 @@ nil
 # CRUD actions (create, read, update, delete) customers, films and tickets.
 ########### DELETE SINGLES
 
-# Show which films a customer has booked to see, and see which customers are coming to see one film.
+
 
 
 # Basic extensions:

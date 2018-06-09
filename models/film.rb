@@ -29,6 +29,11 @@ def customers_booked()
   return customers.map{|customer| Customer.new(customer)}
 end
 
+def delete()
+  sql = "DELETE FROM films WHERE id=$1"
+  values = [@id]
+  SqlRunner.run(sql, values)
+end
 
 def self.update(title, starting_time, duration, age_req, price)
   sql = "INSERT INTO films (title, starting_time, duration, age_req, price) VALUES ($1, $2, $3, $4, $5)"
