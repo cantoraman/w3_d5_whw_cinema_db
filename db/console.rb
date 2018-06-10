@@ -2,23 +2,29 @@ require('pry')
 require_relative('../models/customer')
 require_relative('../models/ticket')
 require_relative('../models/film')
+require_relative('../models/screening')
 require('tty-prompt')
 
 Customer.delete_all()
 Film.delete_all()
 Ticket.delete_all()
+Screening.delete_all()
 
 
 def add_customer(name, age, funds)
   Customer.update(name, age, funds)
 end
 
-def add_film(title, starting_time, duration, age_req, price)
-  Film.update(title, starting_time, duration, age_req, price)
+def add_screening(title, duration, age_req, price, starting_time, salon_number, salon_capacity)
+  film=Film.new(title, duration, age_req, price)
+  film.save()
+  screening=Screening.new(film.id, starting_time, salon_number, salon_capacity)
+  screening.save()
 end
 
-def add_ticket(customer_id, film_id)
-  Ticket.update(customer_id, film_id)
+
+def add_ticket(customer_id, film_id, screening_id)
+  Ticket.update(customer_id, film_id, screening_id)
 end
 
 def choose_customer()
@@ -30,20 +36,38 @@ def choose_customer()
   answer = prompt.select(prompt_string, choices)
   return Customer.new(Customer.find_with_id(answer))
 end
-def choose_film()
-  films=Film.all
+
+#OLD FILM CHOOSER
+# def choose_film()
+#   films=Film.all
+#   prompt = TTY::Prompt.new
+#   prompt_string = 'Please choose a film'
+#   choices = films.map {|film| film_name="#{film.title} #{film.starting_time}"
+#   {film_name => film.id}}
+#   answer = prompt.select(prompt_string, choices)
+#   return Film.new(Film.find_with_id(answer))
+# end
+
+
+
+def choose_screening()
+  screenings=Screening.all
   prompt = TTY::Prompt.new
-  prompt_string = 'Please choose a film'
-  choices = films.map {|film| film_name="#{film.title} #{film.starting_time}"
-  {film_name => film.id}}
+  prompt_string = 'Please choose a screening'
+  choices = screenings.map {|screening| film_name="#{screening.film_title} #{screening.starting_time}"
+  {film_name => screening.id}}
   answer = prompt.select(prompt_string, choices)
-  return Film.new(Film.find_with_id(answer))
+  return Screening.new(Screening.find_with_id(answer))
 end
+
+
+
 
 def sell_ticket()
   customer = choose_customer()
-  film=choose_film()
-  if (customer.funds>=film.price)
+  screening=choose_screening()
+  film = Film.new(Film.find_with_id(screening.film_id))
+  if (customer.funds>=film.price && customer.age>=film.age_req)
     customer.remove_funds(film.price)
     Ticket.update(customer.id, film.id)
   end
@@ -142,7 +166,7 @@ nil
 ########### DELETE SINGLES
 
 
-
+#count tickets
 
 
 
