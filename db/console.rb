@@ -12,7 +12,8 @@ Screening.delete_all()
 
 
 def add_customer(name, age, funds)
-  Customer.update(name, age, funds)
+  customer= Customer.new({'name' => name, 'age' => age, 'funds' => funds})
+  customer.save()
 end
 
 def add_screening(title, duration, age_req, price, starting_time, salon_number, salon_capacity)
@@ -33,7 +34,7 @@ def choose_customer()
   choices = customers.map {|customer| customer_name="#{customer.name} #{customer.id}"
   {customer_name => customer.id}}
   answer = prompt.select(prompt_string, choices)
-  return Customer.find_with_id(answer)
+  return Customer.new(Customer.find_with_id(answer))
 end
 
 #OLD FILM CHOOSER
@@ -62,9 +63,9 @@ def sell_ticket()
   customer = choose_customer()
   screening = choose_screening()
   film = Film.new(Film.find_with_id(screening.film_id))
-  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity > 0)
+  if (customer.funds >= film.price && customer.age>=film.age_req && screening.salon_capacity > 0)
     customer.remove_funds(film.price)
-    customer.save()
+    customer.update()
     Ticket.update(customer.id, film.id, screening.id)
     screening.salon_capacity-=1
     screening.save()

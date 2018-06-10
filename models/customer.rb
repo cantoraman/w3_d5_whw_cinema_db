@@ -53,8 +53,8 @@ end
 
 
 def update()
-  sql = "INSERT INTO customers (name, age, funds) VALUES ($1, $2, $3)"
-  values = [@name, @age, @funds]
+  sql = "UPDATE customers SET name =$1, age=$2, funds=$3 WHERE id = $4"
+  values = [@name, @age, @funds, @id]
   SqlRunner.run(sql, values)
 end
 
@@ -69,9 +69,6 @@ end
 def self.all()
   sql = "SELECT * FROM customers"
   customers=SqlRunner.run(sql)
-  p "XXX"
-  p customers
-  p "xxx"
   return customers.map{ |customer| Customer.new(customer)}
 end
 
