@@ -15,7 +15,7 @@ def initialize (options)
 end
 
 def save()
- sql = "INSERT INTO films (title, starting_time, duration, age_req, price) VALUES ($1,$2,$3,$4) RETURNING id"
+ sql = "INSERT INTO films (title, duration, age_req, price) VALUES ($1,$2,$3,$4) RETURNING id"
  values = [@title, @duration, @age_req, @price]
  film = SqlRunner.run(sql, values).first
  @id = film['id'].to_i

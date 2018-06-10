@@ -16,14 +16,14 @@ def add_customer(name, age, funds)
 end
 
 def add_screening(title, duration, age_req, price, starting_time, salon_number, salon_capacity)
-  film=Film.new(title, duration, age_req, price)
+  film=Film.new({'title' => title, 'duration' => duration, 'age_req' => age_req, 'price' => price})
   film.save()
-  screening=Screening.new(film.id, starting_time, salon_number, salon_capacity)
+  screening=Screening.new({'film_id' => film.id, 'starting_time' => starting_time, 'salon_number' => salon_number, 'salon_capacity' => salon_capacity})
   screening.save()
 end
 
 def add_ticket(customer_id, film_id, screening_id)
-  Ticket.update(customer_id, film_id, screening_id)
+  Ticket.update({'customer_id' => customer_id, 'film_id' => film_id, 'screening_id' => screening_id})
 end
 
 def choose_customer()
@@ -54,18 +54,18 @@ def choose_screening()
   choices = screenings.map {|screening| film_name="#{screening.film_title} #{screening.starting_time}"
   {film_name => screening.id}}
   answer = prompt.select(prompt_string, choices)
-  return Screening.new(Screening.find_with_id(answer))
+  return Screening.new(Screening.find_with_id(answer.to_i))
 end
 
 
 def sell_ticket()
   customer = choose_customer()
-  screening=choose_screening()
+  screening = choose_screening()
   film = Film.new(Film.find_with_id(screening.film_id))
-  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity > 0)
+  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity.to_i > 0)
     customer.remove_funds(film.price)
-    custoemr.save()
-    Ticket.update(customer.id, film.id)
+    customer.save()
+    Ticket.update(customer.id, film.id, screening.id)
     screening.salon_capacity-=1
     screening.save()
   end

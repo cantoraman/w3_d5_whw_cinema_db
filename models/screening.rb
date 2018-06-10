@@ -10,21 +10,21 @@ def initialize (options)
   @film_id = options['film_id'].to_i
   @starting_time = options['starting_time']
   @salon_number = options['salon_number']
-  @salon_capacity = options ['salon_capacity']
+  @salon_capacity = options ['salon_capacity'].to_i
 end
 
 def save()
-sql="INSERT INTO screenings (film_id, ticket_id,  starting_time, salon_number, salon_capacity) VALUES ($1,$2, $3,$4) RETURNING id"
+sql="INSERT INTO screenings (film_id,  starting_time, salon_number, salon_capacity) VALUES ($1,$2, $3,$4) RETURNING id"
 values=[@film_id,@starting_time, @salon_number, @salon_capacity]
 screening=SqlRunner.run(sql, values).first
 @id = screening['id'].to_i
 end
 
 def film_title()
-  sql= "select films.title from films inner join screenings on screenins.film_id=films.id AND screening_id=$1;"
+  sql= "SELECT films.title FROM films INNER JOIN screenings ON screenings.film_id=films.id AND screenings.id=$1;"
   values = [@id]
   film=SqlRunner.run(sql, values).first
-  return Film.new (film)
+  return film["title"]
 end
 
 
