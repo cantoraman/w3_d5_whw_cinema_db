@@ -22,7 +22,6 @@ def add_screening(title, duration, age_req, price, starting_time, salon_number, 
   screening.save()
 end
 
-
 def add_ticket(customer_id, film_id, screening_id)
   Ticket.update(customer_id, film_id, screening_id)
 end
@@ -48,8 +47,6 @@ end
 #   return Film.new(Film.find_with_id(answer))
 # end
 
-
-
 def choose_screening()
   screenings=Screening.all
   prompt = TTY::Prompt.new
@@ -61,15 +58,16 @@ def choose_screening()
 end
 
 
-
-
 def sell_ticket()
   customer = choose_customer()
   screening=choose_screening()
   film = Film.new(Film.find_with_id(screening.film_id))
-  if (customer.funds>=film.price && customer.age>=film.age_req)
+  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity > 0)
     customer.remove_funds(film.price)
+    custoemr.save()
     Ticket.update(customer.id, film.id)
+    screening.salon_capacity-=1
+    screening.save()
   end
 
 end
@@ -102,21 +100,47 @@ add_customer("Pete", 28, 2)
 
 
 #Adding Film - new way
-add_film("Spider-Man - 3D", "13:00", 120, 12, 10)
-add_film("Spider-Man - 3D", "15:00", 120, 12, 10)
-add_film("Spider-Man - 3D", "17:00", 120, 12, 10)
-add_film("Spider-Man - 3D", "19:00", 120, 12, 10)
-add_film("X-Men - 2D", "16:20", 135, 16, 5)
-add_film("X-Men - 2D", "12:20", 135, 16, 5)
-add_film("X-Men - 2D", "20:20", 135, 16, 5)
-add_film("Deadpool", "20:30", 142, 18, 8)
-add_film("Deadpool", "18:30", 142, 18, 8)
-add_film("Deadpool", "16:30", 142, 18, 8)
-add_film("Deadpool", "14:30", 142, 18, 8)
-add_film("Spider-Man - 2D", "10:10", 120, 12, 5)
-add_film("Spider-Man - 2D", "12:10", 120, 12, 5)
-add_film("Spider-Man - 2D", "14:10", 120, 12, 5)
-add_film("Spider-Man - 2D", "16:10", 120, 12, 5)
+# add_film("Spider-Man - 3D", "13:00", 120, 12, 10)
+# add_film("Spider-Man - 3D", "15:00", 120, 12, 10)
+# add_film("Spider-Man - 3D", "17:00", 120, 12, 10)
+# add_film("Spider-Man - 3D", "19:00", 120, 12, 10)
+# add_film("X-Men - 2D", "16:20", 135, 16, 5)
+# add_film("X-Men - 2D", "12:20", 135, 16, 5)
+# add_film("X-Men - 2D", "20:20", 135, 16, 5)
+# add_film("Deadpool", "20:30", 142, 18, 8)
+# add_film("Deadpool", "18:30", 142, 18, 8)
+# add_film("Deadpool", "16:30", 142, 18, 8)
+# add_film("Deadpool", "14:30", 142, 18, 8)
+# add_film("Spider-Man - 2D", "10:10", 120, 12, 5)
+# add_film("Spider-Man - 2D", "12:10", 120, 12, 5)
+# add_film("Spider-Man - 2D", "14:10", 120, 12, 5)
+# add_film("Spider-Man - 2D", "16:10", 120, 12, 5)
+
+#Adding Film - newest way
+add_screening("Spider-Man - 3D", 120, 16, 10, "12:00", 1, 20)
+add_screening("Spider-Man - 3D", 120, 16, 10, "14:00", 1, 20)
+add_screening("Spider-Man - 3D", 120, 16, 10, "16:00", 1, 20)
+add_screening("Spider-Man - 3D", 120, 16, 10, "18:00", 1, 20)
+add_screening("Spider-Man - 3D", 120, 16, 10, "20:00", 1, 20)
+
+add_screening("Spider-Man - 2D", 120, 16, 6, "11:00", 2, 15)
+add_screening("Spider-Man - 2D", 120, 16, 6, "13:00", 2, 15)
+add_screening("Spider-Man - 2D", 120, 16, 6, "15:00", 2, 15)
+add_screening("Spider-Man - 2D", 120, 16, 6, "17:00", 2, 15)
+add_screening("Spider-Man - 2D", 120, 16, 6, "19:00", 2, 15)
+
+add_screening("SAW", 105, 18, 8, "12:30", 3, 12)
+add_screening("SAW", 105, 18, 8, "14:30", 3, 12)
+add_screening("SAW", 105, 18, 8, "16:30", 3, 12)
+add_screening("SAW", 105, 18, 8, "18:30", 3, 12)
+add_screening("SAW", 105, 18, 8, "20:30", 3, 12)
+
+
+
+
+
+
+
 
 
 
