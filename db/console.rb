@@ -33,7 +33,7 @@ def choose_customer()
   choices = customers.map {|customer| customer_name="#{customer.name} #{customer.id}"
   {customer_name => customer.id}}
   answer = prompt.select(prompt_string, choices)
-  return Customer.new(Customer.find_with_id(answer))
+  return Customer.find_with_id(answer)
 end
 
 #OLD FILM CHOOSER
@@ -62,7 +62,7 @@ def sell_ticket()
   customer = choose_customer()
   screening = choose_screening()
   film = Film.new(Film.find_with_id(screening.film_id))
-  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity.to_i > 0)
+  if (customer.funds>=film.price && customer.age>=film.age_req && screening.salon_capacity > 0)
     customer.remove_funds(film.price)
     customer.save()
     Ticket.update(customer.id, film.id, screening.id)

@@ -44,28 +44,34 @@ def remove_funds(funds)
   SqlRunner.run(sql, values)
 end
 
-def self.find_with_id(id)
-sql= "SELECT * FROM customers WHERE id = $1"
-values=[id]
-return SqlRunner.run(sql, values)[0]
-end
 
-def self.update_name(new_name,id)
+def update_name(new_name,id)
   sql="UPDATE customers SET name = $1 WHERE id = $2"
   values=[new_name, id]
   SqlRunner.run(sql, values)
 end
 
 
-def self.update(name, age, funds)
+def update()
   sql = "INSERT INTO customers (name, age, funds) VALUES ($1, $2, $3)"
-  values = [name, age, funds]
+  values = [@name, @age, @funds]
   SqlRunner.run(sql, values)
 end
+
+def self.find_with_id(id)
+sql= "SELECT * FROM customers WHERE id = $1"
+values=[id]
+return SqlRunner.run(sql, values)[0]
+end
+
+
 
 def self.all()
   sql = "SELECT * FROM customers"
   customers=SqlRunner.run(sql)
+  p "XXX"
+  p customers
+  p "xxx"
   return customers.map{ |customer| Customer.new(customer)}
 end
 
